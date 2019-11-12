@@ -21,21 +21,54 @@ class TodoApp extends Component {
             onAdd: async todo => {
                 loading.update({ loading: true });
                 error.textContent = '';
-            }
-        });
+    
         // initial todo load:
         try {
             const saved = await addTodo(todo);
+
+            const todos = this.state.todos;
+            todos.push(saved);
+
+            addTodo.update({ todos });
             
         }
         catch (err) {
             // display error...
+            console.log(err);
         }
         finally {
             loading.update({ loading: false });
         }
 
     }
+});
+
+main.appendChild(addTodo.renderDOM());
+
+const todoList = new TodoList({
+    todos: [],
+    onUpdate: async todo => {
+        loading.update({ loading: true });
+        error.textContent = '';
+
+        try {
+            const updated = await updateTodo(todo);
+
+            const todos = this.state.todos;
+
+            const index = todos.indexOf(todo);
+            todos.splice(index, 1, updated);
+
+            todoList.update({ todos });
+        }
+        catch (err) {
+            console.log(err);
+        }
+        finally {
+            loading.update({ loading: false });
+        }
+    },
+})
 
     renderHTML() {
         return /*html*/`
