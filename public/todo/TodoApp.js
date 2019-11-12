@@ -17,8 +17,15 @@ class TodoApp extends Component {
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
 
+        const addToDo = new AddTodo({
+            onAdd: async todo => {
+                loading.update({ loading: true });
+                error.textContent = '';
+            }
+        });
         // initial todo load:
         try {
+            const saved = await addTodo(todo);
             
         }
         catch (err) {
