@@ -28,7 +28,7 @@ class TodoItem extends Component {
 
         return /*html*/`
             <li class="todo-list-item">
-                <span class="${todo.inactive ? 'inactive' : ''}">${todo.name}</span>
+                <span class="${todo.complete ? 'inactive' : ''}">${todo.task}</span>
                 <div>
                     <button class="inactive-button">
                         Make ${todo.inactive ? 'Active' : 'Inactive'}

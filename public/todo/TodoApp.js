@@ -23,42 +23,77 @@ class TodoApp extends Component {
                 error.textContent = '';
     
         // initial todo load:
-        try {
-            const saved = await addTodo(todo);
+                try {
+                    const saved = await addTodo(todo);
 
-            const todos = this.state.todos;
-            todos.push(saved);
+                    const todos = this.state.todos;
+                    todos.push(saved);
 
-            addTodo.update({ todos });
+                    addTodo.update({ todos });
             
-        }
-        catch (err) {
+                }
+                catch (err) {
             // display error...
-            console.log(err);
-        }
-        finally {
-            loading.update({ loading: false });
-        }
+                    console.log(err);
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
 
-    }
-});
+            }
+        });
 
-main.appendChild(addTodo.renderDOM());
+        main.appendChild(addToDo.renderDOM());
 
-const todoList = new TodoList({
-    todos: [],
-    onUpdate: async todo => {
-        loading.update({ loading: true });
-        error.textContent = '';
+        const todoList = new TodoList({
+            todos: [],
+            onUpdate: async todo => {
+                loading.update({ loading: true });
+                error.textContent = '';
+
+                try {
+                    const updated = await updateTodo(todo);
+
+                    const todos = this.state.todos;
+
+                    const index = todos.indexOf(todo);
+                    todos.splice(index, 1, updated);
+
+                    todoList.update({ todos });
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
+            },
+            onRemove: async todo => {
+                loading.update({ loading: true });
+                error.textContent = '';
+
+                try {
+                    await removeTodo(todo.id);
+
+                    const todos = this.state.todos;
+                    const index = todos.indexOf(todo);
+                    todos.splice(index, 1);
+
+                    todoList.update({ todos });
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
+            }
+        });
+        main.appendChild(todoList.renderDOM());
 
         try {
-            const updated = await updateTodo(todo);
-
-            const todos = this.state.todos;
-
-            const index = todos.indexOf(todo);
-            todos.splice(index, 1, updated);
-
+            const todos = await getTodos();
+            this.state.todos = todos;
             todoList.update({ todos });
         }
         catch (err) {
@@ -67,8 +102,7 @@ const todoList = new TodoList({
         finally {
             loading.update({ loading: false });
         }
-    },
-})
+    }
 
     renderHTML() {
         return /*html*/`
