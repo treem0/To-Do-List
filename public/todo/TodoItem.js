@@ -31,7 +31,7 @@ class TodoItem extends Component {
                 <span class="${todo.complete ? 'complete' : ''}">${todo.task}</span>
                 <div>
                     <button class="inactive-button">
-                        Make ${todo.complete ? 'Open' : 'Done'}
+                        ${todo.complete ? 'Need to Do' : 'Complete'}
                     </button>
                     <button class="remove-button">
                         🗑️
