@@ -17,24 +17,25 @@ class TodoApp extends Component {
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
 
-        const addToDo = new AddTodo({
+        const addNewTodo = new AddTodo({
             onAdd: async todo => {
                 loading.update({ loading: true });
                 error.textContent = '';
+            
     
         // initial todo load:
                 try {
                     const saved = await addTodo(todo);
 
-                    const todos = this.state.todos;
-                    todos.push(saved);
+                    this.state.todos.push(saved);
 
-                    addTodo.update({ todos });
+                    todoList.update({ todos: this.state.todos });
             
                 }
                 catch (err) {
             // display error...
-                    console.log(err);
+                    error.textContent = err;
+                    throw err;
                 }
                 finally {
                     loading.update({ loading: false });
@@ -43,7 +44,7 @@ class TodoApp extends Component {
             }
         });
 
-        main.appendChild(addToDo.renderDOM());
+        main.appendChild(addNewTodo.renderDOM());
 
         const todoList = new TodoList({
             todos: [],
