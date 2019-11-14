@@ -21,8 +21,8 @@ async function run() {
             CREATE TABLE todos (
                 id SERIAL PRIMARY KEY NOT NULL,
                 task VARCHAR(512) NOT NULL,
-                complete BOOLEAN NOT NULL DEFAULT FALSE
-                users_id INTEGER NOT NULL REFERENCES users(id)
+                complete BOOLEAN NOT NULL DEFAULT FALSE,
+                user_id INTEGER NOT NULL REFERENCES users(id)
             );
         `);
 
