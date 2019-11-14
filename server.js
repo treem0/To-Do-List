@@ -58,9 +58,8 @@ app.get('/api/todos', async (req, res) => {
     try {
         const result = await client.query(`
             SELECT * FROM todos
-            FROM todos
             WHERE user_id=$1
-        ` [req.userId]
+        `[req.userId]
         );
 
         res.json(result.rows);
@@ -104,9 +103,9 @@ app.put('/api/todos/:id', async (req, res) => {
             UPDATE todos
             SET task = $2,
                 complete = $3
-            WHERE id = $1
+                WHERE user_id=$1
             RETURNING *;
-        `, [id, todo.task, todo.complete]);
+        `, [req.userId, todo.task, todo.complete]);
      
         res.json(result.rows[0]);
     }
