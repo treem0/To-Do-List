@@ -24,7 +24,7 @@ async function run() {
 
         await Promise.all(
             todos.map(todo => {
-                const user = savedUser.find(user => {
+                const user = savedUser.find(user => { // COULD BE users instead of savedUser
                     return user.id === todo.user_id;
                 });
                 return client.query(`

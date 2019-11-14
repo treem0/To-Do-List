@@ -6,3 +6,7 @@ main {
 .hero {
     width: 80vw;
 }
+
+.no-display {
+    display: none;
+}
