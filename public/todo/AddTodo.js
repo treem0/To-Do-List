@@ -11,7 +11,8 @@ class AddTodo extends Component {
             event.preventDefault();
 
             const toDo = {
-                name: input.value
+                task: input.value,
+                complete: false
             };
 
             try {

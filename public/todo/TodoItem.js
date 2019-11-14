@@ -9,7 +9,7 @@ class TodoItem extends Component {
 
         const inactiveButton = dom.querySelector('.inactive-button');
         inactiveButton.addEventListener('click', () => {
-            todo.inactive === !todo.inactive;
+            todo.complete = !todo.complete;
             onUpdate(todo);
         });
 
@@ -28,10 +28,10 @@ class TodoItem extends Component {
 
         return /*html*/`
             <li class="todo-list-item">
-                <span class="${todo.complete ? 'inactive' : ''}">${todo.task}</span>
+                <span class="${todo.complete ? 'complete' : ''}">${todo.task}</span>
                 <div>
                     <button class="inactive-button">
-                        Make ${todo.inactive ? 'Active' : 'Inactive'}
+                        Make ${todo.complete ? 'Open' : 'Done'}
                     </button>
                     <button class="remove-button">
                         🗑️
