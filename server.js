@@ -103,9 +103,9 @@ app.put('/api/todos/:id', async (req, res) => {
             UPDATE todos
             SET task = $2,
                 complete = $3
-                WHERE user_id=$1
+                WHERE id = $1
             RETURNING *;
-        `, [req.userId, todo.task, todo.complete]);
+        `, [id, todo.task, todo.complete]);
      
         res.json(result.rows[0]);
     }

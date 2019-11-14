@@ -31,7 +31,7 @@ async function run() {
                     INSERT INTO todos (user_id, task, complete)
                     VALUES ($1, $2, $3);
                 `,
-                [user.id, todo.task, todo.complete]);
+                [todo.user_id, todo.task, todo.complete]);
             })
         );
 
