@@ -59,7 +59,8 @@ app.get('/api/todos', async (req, res) => {
         const result = await client.query(`
             SELECT * FROM todos
             WHERE user_id=$1
-        `[req.userId]
+        `,
+        [req.userId]
         );
 
         res.json(result.rows);
